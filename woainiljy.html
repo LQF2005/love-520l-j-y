@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>520 · 陆佳怡专属</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(-45deg, #ffc8dd, #ffafcc, #bde0fe, #a2d2ff);
+            background-size: 400% 400%;
+            animation: bgMove 12s ease infinite;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 爱心飘落背景 */
+        .heart-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            will-change: transform, opacity;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fallStraight {
+            0% { transform: translateY(-18vh) translateX(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(115vh) translateX(0) rotate(360deg); opacity: 0; }
+        }
+        @keyframes fallSwayLeft {
+            0% { transform: translateY(-18vh) translateX(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(45vh) translateX(-30px) rotate(-200deg); opacity: 0.7; }
+            100% { transform: translateY(115vh) translateX(-5px) rotate(-360deg); opacity: 0; }
+        }
+        @keyframes fallSwayRight {
+            0% { transform: translateY(-18vh) translateX(0) rotate(0deg); opacity: 1; }
+            50% { transform: translateY(45vh) translateX(30px) rotate(200deg); opacity: 0.7; }
+            100% { transform: translateY(115vh) translateX(5px) rotate(360deg); opacity: 0; }
+        }
+
+        /* 卡片容器 */
+        .card-wrapper {
+            z-index: 10;
+            animation: cardUp 1s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+            width: 90vw;
+            max-width: 440px;
+            transition: transform 0.3s ease;
+        }
+
+        /* 键盘弹出时卡片上移 */
+        .card-wrapper.keyboard-up {
+            transform: translateY(-12vh);
+        }
+
+        @keyframes cardUp {
+            0% { transform: translateY(60px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 30px;
+            padding: clamp(28px, 7vw, 40px) clamp(18px, 5vw, 35px);
+            box-shadow: 0 20px 60px rgba(255, 94, 125, 0.22), 0 0 80px rgba(255, 150, 180, 0.15);
+            text-align: center;
+            transition: all 0.5s ease;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .card::-webkit-scrollbar { width: 0; }
+
+        /* 阶段1：初始卡片 */
+        .big-heart {
+            font-size: 80px;
+            color: #ff5e7d;
+            margin-bottom: 15px;
+            animation: beat 1.1s ease-in-out infinite alternate;
+            display: inline-block;
+            filter: drop-shadow(0 6px 16px rgba(255, 94, 125, 0.35));
+        }
+
+        @keyframes beat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.18); }
+        }
+
+        .title {
+            font-size: 30px;
+            color: #ff4a7a;
+            font-weight: bold;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .exclusive-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9aaf, #ff758c);
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            padding: 6px 20px;
+            border-radius: 20px;
+            margin: 6px 0 18px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 12px rgba(255, 94, 125, 0.3);
+            animation: softPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes softPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+
+        .text {
+            font-size: 17px;
+            color: #666;
+            line-height: 2;
+            margin: 15px 0 20px;
+        }
+
+        .highlight {
+            color: #ff4a7a;
+            font-weight: 600;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff758c, #ff5e7d);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 24px rgba(255, 94, 125, 0.35);
+            outline: none;
+            -webkit-appearance: none;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:active {
+            transform: scale(0.94);
+            box-shadow: 0 4px 12px rgba(255, 94, 125, 0.4);
+        }
+
+        .card-footer {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #cc8899;
+            letter-spacing: 0.5px;
+        }
+
+        /* 时间未到提示卡片 */
+        .time-tip {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #d6336c;
+            font-weight: 500;
+            background: rgba(255, 224, 231, 0.8);
+            padding: 14px 16px;
+            border-radius: 18px;
+            line-height: 1.8;
+            display: none;
+            animation: fadeInTip 0.5s ease;
+            border: 1px solid rgba(255, 180, 200, 0.5);
+        }
+
+        .time-tip.show {
+            display: block;
+        }
+
+        @keyframes fadeInTip {
+            0% { opacity: 0; transform: translateY(-8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .time-tip .countdown {
+            font-weight: 700;
+            color: #ff4a7a;
+            font-size: 16px;
+        }
+
+        .time-tip .love-meaning {
+            display: block;
+            margin-top: 6px;
+            font-size: 12px;
+            color: #cc8899;
+            letter-spacing: 0.5px;
+        }
+
+        /* 阶段2：登录表单 */
+        .lock-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .form-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ff4a7a;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: #aa7a8b;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+            text-align: left;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 6px;
+            font-weight: 600;
+            padding-left: 8px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 44px 14px 18px;
+            border: 2px solid #ffe0e7;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+            color: #333;
+            font-family: inherit;
+        }
+
+        .input-group input:focus {
+            border-color: #ff758c;
+            box-shadow: 0 0 0 4px rgba(255, 94, 125, 0.1);
+        }
+
+        /* 密码显示/隐藏切换 */
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            bottom: 14px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #cc8899;
+            z-index: 5;
+            background: none;
+            border: none;
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .toggle-password:active {
+            transform: scale(0.9);
+        }
+
+        .verify-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff758c, #ff5e7d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 94, 125, 0.35);
+            transition: all 0.2s ease;
+            margin-top: 10px;
+            letter-spacing: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .verify-btn:active { transform: scale(0.94); }
+
+        .error-msg {
+            color: #e6395e;
+            font-size: 14px;
+            margin-top: 12px;
+            min-height: 20px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        /* 阶段3：表白信 */
+        .love-reveal {
+            display: none;
+            text-align: center;
+        }
+
+        .love-reveal.show {
+            display: block;
+            animation: fadeInAll 0.6s ease;
+        }
+
+        @keyframes fadeInAll {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .love-header-icon {
+            font-size: 56px;
+            margin-bottom: 8px;
+            animation: beat 1.1s ease-in-out infinite alternate;
+            display: inline-block;
+            filter: drop-shadow(0 6px 16px rgba(255, 94, 125, 0.35));
+        }
+
+        .love-greeting {
+            font-size: 22px;
+            color: #d6336c;
+            font-weight: bold;
+            margin-bottom: 4px;
+            letter-spacing: 1px;
+        }
+
+        .love-name {
+            font-size: 30px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4a7a, #ff758c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+        }
+
+        .love-divider {
+            color: #ffb3c6;
+            font-size: 10px;
+            letter-spacing: 4px;
+            margin-bottom: 18px;
+        }
+
+        .love-line {
+            font-size: 16px;
+            color: #555;
+            line-height: 2.2;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: lineFadeIn 0.7s ease forwards;
+        }
+
+        @keyframes lineFadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .love-highlight {
+            color: #ff4a7a;
+            font-weight: 600;
+            background: #ffe0e7;
+            padding: 2px 8px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .love-signature {
+            margin-top: 22px;
+            font-size: 15px;
+            color: #cc8899;
+            font-style: italic;
+            opacity: 0;
+            animation: lineFadeIn 0.8s ease forwards;
+        }
+
+        .love-footer-note {
+            margin-top: 14px;
+            font-size: 13px;
+            color: #ccaabb;
+            opacity: 0;
+            animation: lineFadeIn 0.8s ease forwards;
+        }
+
+        .love-action-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff758c, #ff5e7d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255, 94, 125, 0.35);
+            transition: all 0.2s ease;
+            margin-top: 18px;
+            letter-spacing: 1px;
+            opacity: 0;
+            animation: lineFadeIn 0.8s ease forwards;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .love-action-btn:active {
+            transform: scale(0.94);
+            box-shadow: 0 4px 12px rgba(255, 94, 125, 0.4);
+        }
+
+        .hidden { display: none !important; }
+
+        /* 点击爱心特效 */
+        .click-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 22px;
+            z-index: 100;
+            animation: clickPop 0.7s ease-out forwards;
+        }
+
+        @keyframes clickPop {
+            0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+            40% { transform: translate(-50%, -50%) scale(1.6); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+        }
+
+        /* 响应式 */
+        @media (max-width: 360px) {
+            .card { padding: 24px 16px; border-radius: 22px; }
+            .big-heart { font-size: 60px; }
+            .title { font-size: 24px; }
+            .love-name { font-size: 24px; }
+            .love-line { font-size: 15px; line-height: 2; }
+            .toggle-password { right: 10px; bottom: 12px; }
+        }
+
+        @media (min-width: 768px) {
+            .card { padding: 45px 38px; }
+            .btn, .verify-btn, .love-action-btn { padding: 19px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-bg" id="heartBox" aria-hidden="true"></div>
+
+    <div class="card-wrapper" id="cardWrapper">
+        <div class="card">
+
+            <!-- 阶段1：初始卡片 -->
+            <div id="stage1">
+                <div class="big-heart">❤️</div>
+                <div class="title">520 · 我的世界只有你</div>
+                <div class="exclusive-badge">💖 陆佳怡专属 💖</div>
+                <div class="text">
+                    遇见你的那一刻<br>
+                    世间万物皆为<span class="highlight">配角</span><br><br>
+                    我喜欢你<br>
+                    不问归期，不问远近<br>
+                    余生漫漫，<span class="highlight">我只要你</span>
+                </div>
+                <button class="btn" id="loveBtn">点击接收我的爱意&nbsp;&nbsp;❤️</button>
+                <div class="time-tip" id="timeTip">
+                    💌 佳怡宝宝我就知道你会点<br>
+                    现在是点击查看不了哒<br>
+                    只有在<span class="countdown" id="countdownText"></span>之后才能点击查看哒<br>
+                    <span class="love-meaning">💕 5201314 代表我会爱你一生一世</span>
+                </div>
+                <div class="card-footer">—— 只属于陆佳怡的浪漫 ——</div>
+            </div>
+
+            <!-- 阶段2：登录表单 -->
+            <div id="stage2" class="hidden">
+                <div class="lock-icon">🔐</div>
+                <div class="form-title">陆佳怡 · 专属验证</div>
+                <div class="form-subtitle">请输入你的专属身份信息</div>
+                <div class="input-group">
+                    <label>💌 姓名</label>
+                    <input type="text" id="nameInput" placeholder="请输入你的名字" autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label>🆔 专属身份（身份证号码）</label>
+                    <input type="password" id="idInput" placeholder="请输入身份证号码" autocomplete="off">
+                    <button class="toggle-password" id="togglePassword" type="button">👁️</button>
+                </div>
+                <button class="verify-btn" id="verifyBtn">验证身份 ❤️</button>
+                <div class="error-msg" id="errorMsg"></div>
+            </div>
+
+            <!-- 阶段3：表白信 -->
+            <div class="love-reveal" id="stage3">
+                <div class="love-header-icon">💌</div>
+                <div class="love-greeting">致 · 我的挚爱</div>
+                <div class="love-name" id="showName">陆佳怡</div>
+                <div class="love-divider">━━━━ ❤︎ ━━━━</div>
+
+                <div class="love-line" style="animation-delay: 0.10s;">我不知道什么是<span class="love-highlight">命中注定</span></div>
+                <div class="love-line" style="animation-delay: 0.35s;">但遇见你之后</div>
+                <div class="love-line" style="animation-delay: 0.60s;">我开始<span class="love-highlight">相信</span>了</div>
+                <div class="love-line" style="animation-delay: 0.85s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 1.10s;">你的出现，像一束<span class="love-highlight">光</span></div>
+                <div class="love-line" style="animation-delay: 1.35s;">照亮了我原本平凡的世界</div>
+                <div class="love-line" style="animation-delay: 1.60s;">你的笑容，是我见过<span class="love-highlight">最美的风景</span></div>
+                <div class="love-line" style="animation-delay: 1.85s;">每次看到你笑，我的心就<span class="love-highlight">化了</span></div>
+                <div class="love-line" style="animation-delay: 2.10s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 2.35s;">你就像冬日里的一抹<span class="love-highlight">暖阳</span></div>
+                <div class="love-line" style="animation-delay: 2.60s;">不耀眼，却足够温暖我整个世界</div>
+                <div class="love-line" style="animation-delay: 2.85s;">你就像夜空中的那颗<span class="love-highlight">星</span></div>
+                <div class="love-line" style="animation-delay: 3.10s;">不张扬，却让我的黑夜不再孤单</div>
+                <div class="love-line" style="animation-delay: 3.35s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 3.60s;">我喜欢你</div>
+                <div class="love-line" style="animation-delay: 3.85s;">不是一时兴起的冲动</div>
+                <div class="love-line" style="animation-delay: 4.10s;">而是深思熟虑后的<span class="love-highlight">坚定</span></div>
+                <div class="love-line" style="animation-delay: 4.35s;">不是权衡利弊的选择</div>
+                <div class="love-line" style="animation-delay: 4.60s;">而是心之所向的<span class="love-highlight">唯一</span></div>
+                <div class="love-line" style="animation-delay: 4.85s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 5.10s;">我想和你一起</div>
+                <div class="love-line" style="animation-delay: 5.35s;">看春天的花开，听夏天的蝉鸣</div>
+                <div class="love-line" style="animation-delay: 5.60s;">踩秋天的落叶，赏冬天的初雪</div>
+                <div class="love-line" style="animation-delay: 5.85s;">一年四季，一日三餐</div>
+                <div class="love-line" style="animation-delay: 6.10s;">只要身边是<span class="love-highlight">你</span>，怎样都好</div>
+                <div class="love-line" style="animation-delay: 6.35s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 6.60s;">往后的每一个清晨</div>
+                <div class="love-line" style="animation-delay: 6.85s;">我想要的第一个画面，是<span class="love-highlight">你</span></div>
+                <div class="love-line" style="animation-delay: 7.10s;">往后的每一个黄昏</div>
+                <div class="love-line" style="animation-delay: 7.35s;">我想要的最后一个身影，也是<span class="love-highlight">你</span></div>
+                <div class="love-line" style="animation-delay: 7.60s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 7.85s;">如果全世界我也可以放弃</div>
+                <div class="love-line" style="animation-delay: 8.10s;">至少还有你值得我去<span class="love-highlight">珍惜</span></div>
+                <div class="love-line" style="animation-delay: 8.35s;">你是我今生最大的<span class="love-highlight">幸运</span></div>
+                <div class="love-line" style="animation-delay: 8.60s;">也是我余生所有的<span class="love-highlight">坚定</span></div>
+                <div class="love-line" style="animation-delay: 8.85s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 9.10s;">余生漫漫，星河滚烫</div>
+                <div class="love-line" style="animation-delay: 9.35s;">你是我所有的<span class="love-highlight">向往</span></div>
+                <div class="love-line" style="animation-delay: 9.60s;">不问归期，不问远近</div>
+                <div class="love-line" style="animation-delay: 9.85s;"><span class="love-highlight">我只要你</span></div>
+
+                <div class="love-line" style="animation-delay: 10.15s;"><br></div>
+                <div class="love-line" style="animation-delay: 10.40s;">你的名字，是我念过最<span class="love-highlight">动听</span>的诗</div>
+                <div class="love-line" style="animation-delay: 10.65s;">你的声音，是我听过最<span class="love-highlight">温柔</span>的歌</div>
+                <div class="love-line" style="animation-delay: 10.90s;">每次心跳，都在轻轻呼唤你的名字</div>
+                <div class="love-line" style="animation-delay: 11.15s;">每次呼吸，都充满了对你的<span class="love-highlight">思念</span></div>
+                <div class="love-line" style="animation-delay: 11.40s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 11.65s;">我不敢奢求永远</div>
+                <div class="love-line" style="animation-delay: 11.90s;">但如果永远有尽头</div>
+                <div class="love-line" style="animation-delay: 12.15s;">我希望那个尽头是<span class="love-highlight">你</span></div>
+                <div class="love-line" style="animation-delay: 12.40s;">我不敢承诺来生</div>
+                <div class="love-line" style="animation-delay: 12.65s;">但如果来生可以选择</div>
+                <div class="love-line" style="animation-delay: 12.90s;">我还是会毫不犹豫地走向<span class="love-highlight">你</span></div>
+                <div class="love-line" style="animation-delay: 13.15s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 13.40s;">这世间车马喧嚣，人潮拥挤</div>
+                <div class="love-line" style="animation-delay: 13.65s;">但我的眼里只容得下<span class="love-highlight">你</span>一个身影</div>
+                <div class="love-line" style="animation-delay: 13.90s;">这人生山高路远，风雨兼程</div>
+                <div class="love-line" style="animation-delay: 14.15s;">但只要牵着你的手，我就有了<span class="love-highlight">全世界</span></div>
+                <div class="love-line" style="animation-delay: 14.40s;"><br></div>
+
+                <div class="love-line" style="animation-delay: 14.65s;">陆佳怡，谢谢你出现在我的生命里</div>
+                <div class="love-line" style="animation-delay: 14.90s;">让每一个普通的日子都变得<span class="love-highlight">闪闪发光</span></div>
+                <div class="love-line" style="animation-delay: 15.15s;">往后的岁月，请你做我的<span class="love-highlight">唯一</span></div>
+                <div class="love-line" style="animation-delay: 15.40s;">让我用全部的力气去爱你、护你、珍惜你</div>
+                <div class="love-line" style="animation-delay: 15.65s;">直到时间的尽头，直到世界的末日</div>
+                <div class="love-line" style="animation-delay: 15.90s;">我的心里，也只会有<span class="love-highlight">你</span></div>
+
+                <div class="love-signature" style="animation-delay: 16.30s;">
+                    —— 永远爱你的那个人
+                </div>
+                <button class="love-action-btn" id="loveActionBtn" style="animation-delay: 16.90s;">💗 我已收到你的爱意</button>
+                <div class="love-footer-note" style="animation-delay: 17.30s;">
+                    💖 陆佳怡 · 专属浪漫 💖
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ==================== 身份信息（已设置） ====================
+            const CORRECT_NAME = '陆佳怡';
+            const CORRECT_ID = '360430201010151148';
+
+            // 解锁时间：2026年5月20日13:14:00
+            const unlockTime = new Date(2026, 4, 20, 13, 14, 0).getTime();
+
+            // DOM元素
+            const stage1 = document.getElementById('stage1');
+            const stage2 = document.getElementById('stage2');
+            const stage3 = document.getElementById('stage3');
+            const loveBtn = document.getElementById('loveBtn');
+            const nameInput = document.getElementById('nameInput');
+            const idInput = document.getElementById('idInput');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const errorMsg = document.getElementById('errorMsg');
+            const showName = document.getElementById('showName');
+            const heartBox = document.getElementById('heartBox');
+            const loveActionBtn = document.getElementById('loveActionBtn');
+            const timeTip = document.getElementById('timeTip');
+            const countdownText = document.getElementById('countdownText');
+            const cardWrapper = document.getElementById('cardWrapper');
+            const togglePassword = document.getElementById('togglePassword');
+
+            // ==================== 爱心飘落系统 ====================
+            let heartCount = 0;
+            const MAX_HEARTS = 30;
+            const HEART_COLORS = ['#ff5e7d','#ff7b9c','#ff3b6e','#ff8fab','#ff4d79','#ff6b8a','#ff5577','#ff92a8'];
+
+            function createFallingHeart() {
+                if (heartCount >= MAX_HEARTS) return;
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = ['❤️','💗','💖','💕','💝'][Math.floor(Math.random()*5)];
+                const size = Math.random() * 18 + 14;
+                const left = Math.random() * 94;
+                const animNames = ['fallStraight', 'fallSwayLeft', 'fallSwayRight'];
+                const anim = animNames[Math.floor(Math.random() * animNames.length)];
+                const duration = Math.random() * 5 + 6;
+                const delay = Math.random() * 2.5;
+                const color = HEART_COLORS[Math.floor(Math.random() * HEART_COLORS.length)];
+                heart.style.cssText = `
+                    font-size:${size}px; left:${left}%; top:-40px; color:${color};
+                    animation-name:${anim}; animation-duration:${duration}s;
+                    animation-delay:${delay}s;
+                    animation-timing-function:cubic-bezier(0.25,0.46,0.45,0.94);
+                    animation-fill-mode:forwards;
+                `;
+                heartBox.appendChild(heart);
+                heartCount++;
+                const totalTime = (duration + delay) * 1000;
+                const cleanup = () => {
+                    if (heart.parentNode) { heart.remove(); heartCount = Math.max(0, heartCount - 1); }
+                };
+                const timer = setTimeout(cleanup, totalTime + 300);
+                heart.addEventListener('animationend', () => { clearTimeout(timer); cleanup(); }, { once: true });
+            }
+
+            setInterval(createFallingHeart, 320);
+            for (let i = 0; i < 10; i++) setTimeout(createFallingHeart, i * 180);
+
+            // ==================== 爱心爆发特效 ====================
+            function burstHearts(count = 25) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('span');
+                        heart.textContent = '❤️';
+                        heart.style.cssText = `
+                            position:fixed; pointer-events:none;
+                            left:${Math.random()*80+10}%; top:${Math.random()*60+20}%;
+                            font-size:${Math.random()*20+16}px; color:#ff4a7a;
+                            animation:burstLove 0.9s ease-out forwards; z-index:999;
+                        `;
+                        document.body.appendChild(heart);
+                        heart.addEventListener('animationend', () => heart.remove());
+                    }, i * 45);
+                }
+                if (!document.getElementById('burstKeyframes')) {
+                    const style = document.createElement('style');
+                    style.id = 'burstKeyframes';
+                    style.textContent = `@keyframes burstLove {
+                        0%{transform:translateY(0) scale(0);opacity:1;}
+                        50%{transform:translateY(-35px) scale(1.6);opacity:0.9;}
+                        100%{transform:translateY(-90px) scale(0.4);opacity:0;}
+                    }`;
+                    document.head.appendChild(style);
+                }
+            }
+
+            // ==================== 倒计时格式化 ====================
+            function formatCountdown(remainingMs) {
+                if (remainingMs <= 0) return '现在就可以啦';
+                const totalSeconds = Math.floor(remainingMs / 1000);
+                const days = Math.floor(totalSeconds / 86400);
+                const hours = Math.floor((totalSeconds % 86400) / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                let str = '';
+                if (days > 0) str += days + '天';
+                if (hours > 0 || days > 0) str += hours + '小时';
+                if (minutes > 0 || hours > 0 || days > 0) str += minutes + '分钟';
+                str += seconds + '秒';
+                return str;
+            }
+
+            function updateCountdown() {
+                const now = Date.now();
+                const remaining = unlockTime - now;
+                if (remaining <= 0) {
+                    countdownText.textContent = '现在就可以啦';
+                    if (timeTip.classList.contains('show')) {
+                        timeTip.classList.remove('show');
+                    }
+                    return true;
+                }
+                countdownText.textContent = formatCountdown(remaining);
+                return false;
+            }
+
+            // 每秒更新倒计时
+            setInterval(() => {
+                if (timeTip.classList.contains('show')) {
+                    updateCountdown();
+                }
+            }, 1000);
+
+            // ==================== 按钮点击逻辑 ====================
+            loveBtn.addEventListener('click', () => {
+                const now = Date.now();
+                if (now < unlockTime) {
+                    // 未到时间：显示提示和倒计时
+                    updateCountdown();
+                    timeTip.classList.add('show');
+                    loveBtn.style.transform = 'scale(0.97)';
+                    setTimeout(() => { loveBtn.style.transform = ''; }, 150);
+                    // 滚动提示可见
+                    document.querySelector('.card').scrollTop = document.querySelector('.card').scrollHeight;
+                } else {
+                    // 时间已到：跳转登录
+                    timeTip.classList.remove('show');
+                    loveBtn.style.transform = 'scale(0.9)';
+                    loveBtn.style.boxShadow = '0 0 40px rgba(255,94,125,0.7)';
+                    setTimeout(() => {
+                        stage1.classList.add('hidden');
+                        stage2.classList.remove('hidden');
+                        document.querySelector('.card').scrollTop = 0;
+                        cardWrapper.classList.add('keyboard-up');
+                        setTimeout(() => nameInput.focus(), 350);
+                    }, 200);
+                }
+            });
+
+            // ==================== 密码显示切换 ====================
+            togglePassword.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (idInput.type === 'password') {
+                    idInput.type = 'text';
+                    togglePassword.textContent = '🙈';
+                } else {
+                    idInput.type = 'password';
+                    togglePassword.textContent = '👁️';
+                }
+                idInput.focus();
+            });
+
+            // ==================== 身份验证 ====================
+            function verifyIdentity() {
+                const name = nameInput.value.trim();
+                const id = idInput.value.trim();
+                if (!name || !id) {
+                    errorMsg.textContent = '💢 姓名和身份证号码都不能为空哦~';
+                    return;
+                }
+                if (name === CORRECT_NAME && id === CORRECT_ID) {
+                    errorMsg.textContent = '';
+                    stage2.classList.add('hidden');
+                    stage3.classList.add('show');
+                    showName.textContent = name;
+                    document.querySelector('.card').scrollTop = 0;
+                    cardWrapper.classList.remove('keyboard-up');
+                    burstHearts(25);
+                } else {
+                    errorMsg.textContent = '❌ 身份验证失败，你不是我的陆佳怡宝宝~';
+                    nameInput.style.borderColor = '#e6395e';
+                    idInput.style.borderColor = '#e6395e';
+                    setTimeout(() => {
+                        nameInput.style.borderColor = '#ffe0e7';
+                        idInput.style.borderColor = '#ffe0e7';
+                    }, 800);
+                }
+            }
+
+            verifyBtn.addEventListener('click', verifyIdentity);
+            idInput.addEventListener('keypress', e => { if (e.key === 'Enter') verifyIdentity(); });
+            nameInput.addEventListener('keypress', e => { if (e.key === 'Enter') idInput.focus(); });
+
+            // ==================== 移动端键盘适配 ====================
+            function handleFocus() {
+                cardWrapper.classList.add('keyboard-up');
+            }
+            function handleBlur() {
+                // 延迟移除，避免与点击事件冲突
+                setTimeout(() => {
+                    if (document.activeElement !== nameInput && document.activeElement !== idInput) {
+                        cardWrapper.classList.remove('keyboard-up');
+                    }
+                }, 150);
+            }
+            nameInput.addEventListener('focus', handleFocus);
+            nameInput.addEventListener('blur', handleBlur);
+            idInput.addEventListener('focus', handleFocus);
+            idInput.addEventListener('blur', handleBlur);
+
+            // ==================== 表白页按钮 ====================
+            loveActionBtn.addEventListener('click', () => {
+                loveActionBtn.textContent = '💗 我也爱你！';
+                loveActionBtn.style.background = 'linear-gradient(135deg, #ff4a7a, #d6336c)';
+                burstHearts(30);
+                setTimeout(() => {
+                    loveActionBtn.textContent = '💗 我已收到你的爱意';
+                    loveActionBtn.style.background = 'linear-gradient(135deg, #ff758c, #ff5e7d)';
+                }, 2000);
+            });
+
+            // ==================== 全局点击爱心特效 ====================
+            function isButtonTarget(el) { return el && (el.tagName === 'BUTTON' || el.closest('button')); }
+
+            document.addEventListener('click', e => {
+                if (isButtonTarget(e.target)) return;
+                const heart = document.createElement('div');
+                heart.className = 'click-heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = e.clientX + 'px';
+                heart.style.top = e.clientY + 'px';
+                document.body.appendChild(heart);
+                heart.addEventListener('animationend', () => heart.remove(), { once: true });
+            });
+
+            document.addEventListener('touchstart', e => {
+                if (isButtonTarget(e.target)) return;
+                if (e.touches.length === 1) {
+                    const heart = document.createElement('div');
+                    heart.className = 'click-heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = e.touches[0].clientX + 'px';
+                    heart.style.top = e.touches[0].clientY + 'px';
+                    document.body.appendChild(heart);
+                    heart.addEventListener('animationend', () => heart.remove(), { once: true });
+                }
+            }, { passive: true });
+
+            // ==================== 实时检测时间到 ====================
+            setInterval(() => {
+                if (Date.now() >= unlockTime && timeTip.classList.contains('show')) {
+                    timeTip.classList.remove('show');
+                }
+            }, 3000);
+
+            console.log('%c💗 陆佳怡专属页面已就绪 %c| %c5201314 💕',
+                'font-size:16px;', '', 'color:#ff5e7d;');
+            console.log('%c⏰ 解锁时间：2026年5月20日 13:14', 'color:#888;');
+        })();
+    </script>
+</body>
+</html>
